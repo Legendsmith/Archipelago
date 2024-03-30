@@ -601,6 +601,16 @@ class GameManager(App):
     def set_new_energy_link_value(self):
         if hasattr(self, "energy_link_label"):
             self.energy_link_label.text = f"EL: {Utils.format_SI_prefix(self.ctx.current_energy_link_value)}J"
+    
+    def enable_fire_support(self):
+        if not hasattr(self, "fire_support_label"):
+            self.fire_support_label = Label(text="Fire Support: Standby",
+                                           size_hint_x=None, width=150)
+            self.connect_layout.add_widget(self.fire_support_label)
+
+    def set_new_fire_support_value(self):
+        if hasattr(self, "fire_support_label"):
+            self.fire_support_label.text = f"EL: {Utils.format_SI_prefix(self.ctx.current_fire_support_value)}J"
 
     def update_hints(self):
         hints = self.ctx.stored_data[f"_read_hints_{self.ctx.team}_{self.ctx.slot}"]

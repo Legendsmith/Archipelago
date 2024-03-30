@@ -193,6 +193,7 @@ class CommonContext:
     server_version: Version = Version(0, 0, 0)
     generator_version: Version = Version(0, 0, 0)
     current_energy_link_value: typing.Optional[int] = None  # to display in UI, gets set by server
+    current_fire_support_value: typing.Optional[int] = None # to display in UI, gets set by server as well.
 
     last_death_link: float = time.time()  # last send/received death link on AP layer
 
@@ -876,6 +877,10 @@ async def process_server_cmd(ctx: CommonContext, args: dict):
             ctx.current_energy_link_value = args["value"]
             if ctx.ui:
                 ctx.ui.set_new_energy_link_value()
+        elif args["key"].startswith("FireSupport"):
+            ctx.current_fire_support_value = args["value"]
+            if ctx.ui:
+                ctx.ui.set_new_fire_support_value()
     else:
         logger.debug(f"unknown command {cmd}")
 

@@ -750,5 +750,9 @@ commands.add_command("toggle-ap-chat", "Toggle sending of chat messages from pla
     log("Player command toggle-ap-chat") -- notifies client
 end)
 
+commands.add_command("ap-firesupport", "Used by the Archipelago client to manage Fire Support", function(call)
+    
+end)
+
 -- data
 progressive_technologies = {{ dict_to_lua(progressive_technology_table) }}

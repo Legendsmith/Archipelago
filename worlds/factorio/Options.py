@@ -421,6 +421,16 @@ class EnergyLink(Toggle):
     """Allow sending energy to other worlds. 25% of the energy is lost in the transfer."""
     display_name = "EnergyLink"
 
+class FireSupport(Toggle):
+    """Allow sending and recieving fire support checks from other worlds."""
+    display_name = "FireSupport"
+class FireSupportChecks(Range):
+    """Adds checks that when found add to the global fire support stock."""
+    display_name = "Fire Support Checks"
+    range_end=100
+    default=25
+
+
 
 factorio_options: typing.Dict[str, type(Option)] = {
     "max_science_pack": MaxSciencePack,
@@ -454,6 +464,8 @@ factorio_options: typing.Dict[str, type(Option)] = {
     "evolution_trap_increase": EvolutionTrapIncrease,
     "death_link": DeathLink,
     "energy_link": EnergyLink,
+    "fire_support": FireSupport,
+    "fire_support_checks": FireSupport,
     "start_inventory_from_pool": StartInventoryPool,
 }
 
@@ -469,3 +481,4 @@ if datetime.datetime.today().month == 4:
         ChunkShuffle.__doc__ += """
         2023 April Fool's option. Shuffles chunk border transitions."""
     factorio_options["chunk_shuffle"] = ChunkShuffle
+

@@ -78,6 +78,7 @@ class FactorioContext(CommonContext):
         self.death_link_tick: int = 0  # last send death link on Factorio layer
         self.factorio_json_text_parser = FactorioJSONtoTextParser(self)
         self.energy_link_increment = 0
+        self.fire_support_increment = 0
         self.last_deplete = 0
         self.filter_item_sends: bool = filter_item_sends
         self.multiplayer: bool = False  # whether multiple different players have connected
@@ -89,6 +90,13 @@ class FactorioContext(CommonContext):
             return f"EnergyLink{self.team}"
         else:
             return "EnergyLink"
+    @property
+    def firesupport_key(self) -> str:
+        if self.generator_version >= (0, 4, 4):
+            return f"FireSupport{self.team}"
+        else:
+            return "FireSupport"
+
 
     async def server_auth(self, password_requested: bool = False):
         if password_requested and not self.password:
@@ -134,6 +142,16 @@ class FactorioContext(CommonContext):
             return "Standby"
         else:
             return f"{Utils.format_SI_prefix(self.current_energy_link_value)}J"
+    @property
+    def fire_support_status(self) -> str:
+        if not self.energy_link_increment:
+            return "Disabled"
+        elif self.current_energy_link_value is None:
+            return "Standby"
+        else:
+            return f"{self.current_fire_support_value} Ammo"
+
+
 
     def on_deathlink(self, data: dict):
         if self.rcon_client:
@@ -150,6 +168,10 @@ class FactorioContext(CommonContext):
                 async_start(self.send_msgs([{
                     "cmd": "SetNotify", "keys": [self.energylink_key]
                 }]))
+            if cmd == "Connected" and self.fire_support_increment:
+                async_start(self.send_msgs([{
+                    "cmd": "SetNotify", "keys": [self.firesupport_key]
+                }]))
         elif cmd == "SetReply":
             if args["key"].startswith("EnergyLink"):
                 if self.energy_link_increment and args.get("last_deplete", -1) == self.last_deplete:
@@ -160,6 +182,10 @@ class FactorioContext(CommonContext):
                         logger.debug(f"EnergyLink: Received {gained_text}. "
                                      f"{Utils.format_SI_prefix(args['value'])}J remaining.")
                         self.rcon_client.send_command(f"/ap-energylink {gained}")
+            #Firesupport
+            # todo: Finish this
+            if args["key"].startswith("FireSupport"):
+                pass
 
     def on_user_say(self, text: str) -> typing.Optional[str]:
         # Mirror chat sent from the UI to the Factorio server.
