@@ -421,9 +421,14 @@ class EnergyLink(Toggle):
     """Allow sending energy to other worlds. 25% of the energy is lost in the transfer."""
     display_name = "EnergyLink"
 
-class FireSupport(Toggle):
+class FireSupport(Choice):
     """Allow sending and recieving fire support checks from other worlds."""
-    display_name = "FireSupport"
+    display_name = "Fire Support"
+    option_artillery = 1
+    option_atomic = 2
+    default = 2
+
+    
 class FireSupportChecks(Range):
     """Adds checks that when found add to the global fire support stock."""
     display_name = "Fire Support Checks"

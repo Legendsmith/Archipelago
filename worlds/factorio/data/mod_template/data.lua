@@ -60,3 +60,13 @@ if mods["science-not-invited"] then
 {% endfor %}
     SNI.setWeights(weights)
 end
+
+-- TODO: make it so the icon works?
+local fire_support_radio_item = table.deepcopy(data.raw["capsule"]["artillery-targeting-remote"])
+fire_support_radio_item.name="ap-fire-support-radio"
+fire_support_radio_item.localised_name = "Fire Support Radio"
+fire_support_radio_item.capsule_action = {flare="artillery-flare"}
+fire_support_radio_item.icon = "__AP__/graphics/icons/fire_support_radio.png"
+fire_support_radio_item.icon_size=64
+fire_support_radio_item.icon_mipmaps=4
+data.raw["capsule"]["fire_support_radio_item"]=fire_support_radio_item
