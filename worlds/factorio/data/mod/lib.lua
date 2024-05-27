@@ -37,3 +37,8 @@ function fire_entity_at_players(entity_name, speed)
         end
     end
 end
+
+function fire_entity_at_position(entity_name,position,speed)
+    game.surfaces[1].create_entity(name=entity_name,position=random_offset_position(position,256),target_position=position)
+
+    

@@ -754,5 +754,13 @@ commands.add_command("ap-firesupport", "Used by the Archipelago client to manage
     
 end)
 
+local function on_player_used_capsule(event)
+    if not event.item.item_name == "fire_support_radio_item" then
+        return
+    end
+    position = event.position
+    
+end
+
 -- data
 progressive_technologies = {{ dict_to_lua(progressive_technology_table) }}

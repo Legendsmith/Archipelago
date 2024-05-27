@@ -144,9 +144,9 @@ class FactorioContext(CommonContext):
             return f"{Utils.format_SI_prefix(self.current_energy_link_value)}J"
     @property
     def fire_support_status(self) -> str:
-        if not self.energy_link_increment:
+        if not self.fire_support_increment:
             return "Disabled"
-        elif self.current_energy_link_value is None:
+        elif self.current_fire_support_value is None:
             return "Standby"
         else:
             return f"{self.current_fire_support_value} Ammo"
